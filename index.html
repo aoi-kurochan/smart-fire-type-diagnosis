@@ -838,8 +838,8 @@
           ${createParagraphs(detail.month)}
         </section>
         <section class="result-section">
-          <h3>最初に見るとよい資料</h3>
-          ${createParagraphs(detail.material)}
+          <h3>相性がよさそうな特典</h3>
+          <p>これから順番に届く特典の中では、「${detail.material[0]}」がこのタイプと特に相性がよさそうです。</p>
         </section>
       `;
       afterMessageRoot.innerHTML = createParagraphs(afterMessage);
