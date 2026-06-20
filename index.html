@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>スマートFIREタイプ診断｜あおいのスマートFIRE</title>
+  <meta name="description" content="会社員の安定を活かしながら、AI副業、Kindle出版、資産運用を少しずつ積み上げるためのタイプ診断です。">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23fff9ef'/%3E%3Cpath d='M8 20c5-8 11-8 16-1' fill='none' stroke='%2344566f' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='13' r='4' fill='%23d8a8aa'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #243044;
+      --muted: #667085;
+      --soft-navy: #44566f;
+      --paper: #fffdf8;
+      --base: #f7f0e7;
+      --cream: #fff9ef;
+      --line: #e8dccf;
+      --rose: #d8a8aa;
+      --rose-deep: #a45f69;
+      --bar-a: #7890a8;
+      --bar-b: #d8a8aa;
+      --bar-c: #b9a47a;
+      --bar-d: #8a9a91;
+      --shadow: 0 18px 50px rgba(68, 86, 111, 0.12);
+      --radius: 8px;
+      --body-font: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", sans-serif;
+      --heading-font: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(216, 168, 170, 0.18), transparent 28rem),
+        linear-gradient(180deg, var(--paper) 0%, var(--base) 100%);
+      font-family: var(--body-font);
+      line-height: 1.9;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      width: min(100%, 720px);
+      margin: 0 auto;
+      padding: 22px 18px 36px;
+    }
+
+    .site-header {
+      padding: 10px 0 18px;
+      color: var(--soft-navy);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .hero {
+      padding: 24px 0 28px;
+    }
+
+    .hero-mark {
+      width: 100%;
+      height: 86px;
+      margin-bottom: 18px;
+      border: 1px solid rgba(232, 220, 207, 0.9);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.78);
+      box-shadow: 0 10px 28px rgba(68, 86, 111, 0.08);
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: var(--heading-font);
+      font-size: clamp(1.22rem, 5.55vw, 2.95rem);
+      line-height: 1.38;
+      font-weight: 600;
+      color: #202b3c;
+    }
+
+    .hero-title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .lead {
+      margin: 22px 0 0;
+      color: #445066;
+      font-size: 1rem;
+    }
+
+    .lead p {
+      margin: 0 0 14px;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-family: var(--heading-font);
+      font-size: 1.42rem;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .diagnosis {
+      margin-top: 12px;
+    }
+
+    .question {
+      margin: 0 0 22px;
+      padding: 22px 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.86);
+      box-shadow: 0 10px 28px rgba(68, 86, 111, 0.06);
+    }
+
+    .question legend {
+      padding: 0;
+      margin-bottom: 15px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .option-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option {
+      position: relative;
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 14px 13px;
+      border: 1px solid #eadfd3;
+      border-radius: var(--radius);
+      background: #fffaf2;
+      color: #354158;
+      transition: border-color 0.18s ease, background-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .option:hover {
+      border-color: rgba(164, 95, 105, 0.45);
+      background: #fffdf8;
+    }
+
+    .option input {
+      width: 18px;
+      height: 18px;
+      margin: 4px 0 0;
+      accent-color: var(--rose-deep);
+    }
+
+    .option:has(input:focus-visible) {
+      outline: 3px solid rgba(164, 95, 105, 0.26);
+      outline-offset: 2px;
+    }
+
+    .option:has(input:checked) {
+      border-color: rgba(164, 95, 105, 0.72);
+      background: #fff6f2;
+      box-shadow: inset 4px 0 0 rgba(164, 95, 105, 0.44);
+    }
+
+    .actions {
+      display: grid;
+      gap: 12px;
+      margin: 28px 0 18px;
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-height: 52px;
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      padding: 13px 18px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .primary-button {
+      color: #fffdf8;
+      background: var(--soft-navy);
+      box-shadow: 0 14px 28px rgba(68, 86, 111, 0.18);
+    }
+
+    .primary-button:hover {
+      background: #34465d;
+    }
+
+    .secondary-button {
+      color: var(--soft-navy);
+      background: #fffaf2;
+      border-color: var(--line);
+    }
+
+    .secondary-button:hover {
+      border-color: rgba(68, 86, 111, 0.34);
+      background: #fffdf8;
+    }
+
+    .notice {
+      min-height: 28px;
+      margin: 0;
+      color: var(--rose-deep);
+      font-weight: 700;
+    }
+
+    .result {
+      display: none;
+      margin: 34px 0 28px;
+    }
+
+    .result.is-visible {
+      display: block;
+      animation: fadeIn 0.3s ease both;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .result-card {
+      padding: 28px 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .result-kicker {
+      margin: 0 0 8px;
+      color: var(--rose-deep);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .result-title {
+      margin: 0 0 16px;
+      font-family: var(--heading-font);
+      font-size: clamp(1.75rem, 7vw, 2.45rem);
+      line-height: 1.42;
+      font-weight: 600;
+    }
+
+    .result-intro {
+      margin: 0 0 22px;
+      color: #445066;
+    }
+
+    .subtype {
+      margin: 20px 0;
+      padding: 16px 15px;
+      border: 1px solid #eadfd3;
+      border-radius: var(--radius);
+      background: #fff8f2;
+    }
+
+    .subtype p {
+      margin: 0 0 8px;
+    }
+
+    .subtype p:last-child {
+      margin-bottom: 0;
+    }
+
+    .subtype-title {
+      color: var(--soft-navy);
+      font-weight: 700;
+    }
+
+    .bars {
+      margin: 24px 0 26px;
+      padding: 18px 0 4px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(118px, 42%) 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .bar-label {
+      color: #39465d;
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .bar-track {
+      height: 14px;
+      border-radius: 999px;
+      background: #f0e7dc;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      display: block;
+      height: 100%;
+      min-width: 7%;
+      border-radius: inherit;
+      transition: width 0.3s ease;
+    }
+
+    .bar-fill.type-a {
+      background: var(--bar-a);
+    }
+
+    .bar-fill.type-b {
+      background: var(--bar-b);
+    }
+
+    .bar-fill.type-c {
+      background: var(--bar-c);
+    }
+
+    .bar-fill.type-d {
+      background: var(--bar-d);
+    }
+
+    .result-section {
+      margin: 24px 0 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .result-section h3 {
+      margin: 0 0 8px;
+      color: #2f3c54;
+      font-family: var(--heading-font);
+      font-size: 1.08rem;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .result-section p {
+      margin: 0 0 10px;
+      color: #445066;
+    }
+
+    .result-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    .after-message {
+      margin: 32px 0 0;
+      padding: 22px 18px;
+      border-left: 4px solid rgba(164, 95, 105, 0.42);
+      background: #fff8f2;
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .after-message p {
+      margin: 0 0 10px;
+    }
+
+    .after-message p:last-child {
+      margin-bottom: 0;
+    }
+
+    .site-footer {
+      padding: 20px 0 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (min-width: 640px) {
+      .page {
+        padding: 30px 28px 44px;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .hero-mark {
+        height: 104px;
+      }
+
+      .question {
+        padding: 26px 24px;
+      }
+
+      .result-card {
+        padding: 36px 34px;
+      }
+
+      .actions {
+        grid-template-columns: 1fr auto;
+        align-items: center;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">あおいのスマートFIRE</header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <svg class="hero-mark" role="img" aria-label="スマートFIREの小さな一歩を表す淡い図案" viewBox="0 0 720 110" preserveAspectRatio="none">
+          <rect width="720" height="110" fill="#fffaf2"></rect>
+          <path d="M0 82 C110 40 178 98 280 58 S456 28 550 60 S654 92 720 42" fill="none" stroke="#d8a8aa" stroke-width="5" opacity="0.55"></path>
+          <path d="M0 36 C118 70 194 18 302 44 S448 92 580 48 S680 28 720 62" fill="none" stroke="#44566f" stroke-width="4" opacity="0.32"></path>
+          <circle cx="128" cy="48" r="8" fill="#d8a8aa" opacity="0.8"></circle>
+          <circle cx="356" cy="42" r="10" fill="#b9a47a" opacity="0.72"></circle>
+          <circle cx="574" cy="58" r="8" fill="#8a9a91" opacity="0.78"></circle>
+        </svg>
+        <h1 id="hero-title"><span class="hero-title-line">あなたの最初の一手が<span class="nowrap">わかる</span></span><span class="hero-title-line">スマートFIREタイプ診断</span></h1>
+        <div class="lead">
+          <p>スマートFIREの資料に興味を持ってくださり、ありがとうございます。</p>
+          <p>スマートFIREを始めたいと思っても、AI副業、Kindle出版、資産運用のどこから手をつければいいのか迷う方は多いと思います。</p>
+          <p>まずは、今の自分に合った最初の一歩を整理してみましょう。</p>
+          <p>8つの質問に答えると、あなたに近いタイプと、今日からできる小さな行動が表示されます。</p>
+        </div>
+      </section>
+
+      <section class="diagnosis" aria-labelledby="diagnosis-title">
+        <h2 class="section-title" id="diagnosis-title">8つの質問</h2>
+        <form id="diagnosis-form" novalidate>
+          <div id="questions"></div>
+          <div class="actions">
+            <button class="primary-button" type="submit">診断する</button>
+            <p class="notice" id="notice" aria-live="polite"></p>
+          </div>
+        </form>
+      </section>
+
+      <section class="result" id="result" aria-labelledby="result-title" tabindex="-1">
+        <div class="result-card">
+          <p class="result-kicker">診断結果</p>
+          <h2 class="result-title" id="result-title"></h2>
+          <div class="result-intro" id="result-intro"></div>
+          <div class="subtype" id="subtype"></div>
+          <div class="bars" id="bars" aria-label="4タイプの傾向"></div>
+          <div id="result-details"></div>
+          <div class="after-message" id="after-message"></div>
+          <div class="actions">
+            <button class="secondary-button" type="button" id="reset-button">もう一度診断する</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">© あおいのスマートFIRE</footer>
+  </div>
+
+  <script>
+    const typeOrder = ["D", "C", "A", "B"];
+
+    const typeLabels = {
+      A: "AI副業から始めるタイプ",
+      B: "Kindle出版から始めるタイプ",
+      C: "家計と資産運用を整えるタイプ",
+      D: "まず会社との距離感を整えるタイプ"
+    };
+
+    const questions = [
+      {
+        text: "Q1. 今いちばん強い悩みに近いものはどれですか？",
+        options: {
+          A: "副業を始めたいけれど、何をすればいいかわからない",
+          B: "自分の経験や知識を形にして収入につなげたい",
+          C: "お金の不安を減らしたい",
+          D: "会社のことを考えるだけで気が重い"
+        }
+      },
+      {
+        text: "Q2. 今の自分に足りないと感じるものはどれですか？",
+        options: {
+          A: "収入を作るための具体的な行動",
+          B: "発信や出版に使えるテーマ",
+          C: "家計や資産の見える化",
+          D: "心と時間の余白"
+        }
+      },
+      {
+        text: "Q3. 比較的取り組みやすそうだと感じるものはどれですか？",
+        options: {
+          A: "AIを使って作業を効率化すること",
+          B: "Kindleやブログなど、文章で発信すること",
+          C: "支出や資産を整理すること",
+          D: "仕事との向き合い方を見直すこと"
+        }
+      },
+      {
+        text: "Q4. 1ヶ月後に少しでも変わっていたら嬉しいことはどれですか？",
+        options: {
+          A: "小さくても副業収入の芽が見えていること",
+          B: "自分の本やコンテンツのテーマが決まっていること",
+          C: "お金の流れが見えて、不安が少し減っていること",
+          D: "会社に振り回される時間や気持ちが少し減っていること"
+        }
+      },
+      {
+        text: "Q5. 今、いちばん苦手意識があるものはどれですか？",
+        options: {
+          A: "新しいツールを使うこと",
+          B: "自分の考えを文章にすること",
+          C: "お金の管理や投資の勉強",
+          D: "会社との距離を取ること"
+        }
+      },
+      {
+        text: "Q6. これまで少しでも経験があるものはどれですか？",
+        options: {
+          A: "AIツールを使ったことがある",
+          B: "ブログ、SNS、Kindleなどで文章を書いたことがある",
+          C: "家計簿、投資、貯金の見直しをしたことがある",
+          D: "働き方や転職について真剣に考えたことがある"
+        }
+      },
+      {
+        text: "Q7. 今の生活でいちばん現実的に増やせそうなものはどれですか？",
+        options: {
+          A: "作業効率",
+          B: "発信する量",
+          C: "毎月の余剰資金",
+          D: "休む時間や考える時間"
+        }
+      },
+      {
+        text: "Q8. 今の自分に必要な言葉に近いものはどれですか？",
+        options: {
+          A: "まず小さく稼ぐ経験を作りましょう",
+          B: "あなたの経験は、誰かの役に立ちます",
+          C: "お金の不安は、見える化すると軽くなります",
+          D: "まずは壊れない働き方を作りましょう"
+        }
+      }
+    ];
+
+    const subtypeComments = {
+      D: [
+        "会社や仕事の負担が、思っている以上に行動力を削っている可能性があります。",
+        "副業を増やす前に、時間と心の余白も一緒に整えていきましょう。"
+      ],
+      C: [
+        "お金の不安を見える化すると、行動の優先順位が決まりやすくなります。",
+        "副業や出版と並行して、家計の整理も進めていきましょう。"
+      ],
+      A: [
+        "AIを使うことで、考える、調べる、書くという作業の負担を減らせます。",
+        "完璧に使いこなすより、まずは日々の作業を少し軽くするところから始めましょう。"
+      ],
+      B: [
+        "あなたの経験や学びは、誰かの役に立つコンテンツになる可能性があります。",
+        "小さな気づきでも、文章にして残す習慣を作っていきましょう。"
+      ]
+    };
+
+    const results = {
+      A: {
+        intro: [
+          "あなたは、まずAIを使って小さな収入の芽を作るところから始めると進みやすいタイプです。",
+          "最初から大きく稼ごうとしなくて大丈夫です。",
+          "リサーチ、文章作成、構成作りなどをAIに手伝ってもらいながら、まずは小さく試していきましょう。"
+        ],
+        state: [
+          "今のあなたは、まず小さく収入の芽を作ることで前に進みやすい状態です。",
+          "ただし、新しいことを増やしすぎると続きにくくなります。",
+          "AIを使って、作業そのものを軽くする設計にしていきましょう。"
+        ],
+        stumble: [
+          "最初から大きく稼ごうとして、情報収集だけで疲れてしまうことです。",
+          "まずは、1つの作業をAIで短縮するところからで大丈夫です。"
+        ],
+        today: ["AIに「自分の経験でできそうな副業案」を10個出してもらい、その中から1つだけ試す候補を選んでみましょう。"],
+        week: [
+          "選んだ副業候補について、実際に需要があるかをリサーチしてみましょう。",
+          "似た発信者、商品、記事、Kindle本があるかを見るだけでも十分です。"
+        ],
+        month: [
+          "小さな案件、発信、商品案のどれかを1つ形にしてみましょう。",
+          "収益化よりも、まずは「自分でも動けた」という感覚を作ることが大切です。"
+        ],
+        material: ["AI執筆を速める初期設定プロンプト"]
+      },
+      B: {
+        intro: [
+          "あなたは、自分の経験や学びをコンテンツにして積み上げていくことと相性が良いタイプです。",
+          "特別な実績がなくても、過去に悩んだこと、調べたこと、乗り越えたことは、誰かにとって役立つ情報になります。",
+          "まずは、自分が書けるテーマを整理するところから始めましょう。"
+        ],
+        state: [
+          "今のあなたは、自分の経験や学びを整理して、誰かの役に立つ形に変えていくことと相性が良い状態です。",
+          "特別な実績がなくても、過去に悩んだことや調べたことには価値があります。"
+        ],
+        stumble: [
+          "「自分なんかが書いていいのだろうか」と考えすぎて、最初の一歩が止まることです。",
+          "すごい人になる必要はありません。",
+          "少し前の自分に向けて書けば大丈夫です。"
+        ],
+        today: ["過去に悩んだこと、調べたこと、人に説明できることを10個書き出してみましょう。"],
+        week: [
+          "書き出したテーマの中から1つ選び、Kindleで似た本を10冊調べてみましょう。",
+          "すでに読まれているテーマがあるかを確認することが大切です。"
+        ],
+        month: [
+          "目次案を1つ作って、短い原稿を書き始めてみましょう。",
+          "最初から完璧な本を作るより、まずは1冊分の流れを作ることが大切です。"
+        ],
+        material: ["0から10万円を目指す収入づくりの方法"]
+      },
+      C: {
+        intro: [
+          "あなたは、まずお金の流れを見える化すると前に進みやすいタイプです。",
+          "副業や投資を始める前に、毎月の支出、余剰資金、リスク許容度を整理しておくと、判断が落ち着きます。",
+          "焦って増やすより、まずは不安の正体を見える化していきましょう。"
+        ],
+        state: [
+          "今のあなたは、まずお金の流れを見える化すると前に進みやすい状態です。",
+          "副業や投資の前に、毎月いくら使い、いくら残り、どれくらいリスクを取れるのかを知ることが大切です。"
+        ],
+        stumble: [
+          "不安を減らしたくて、よくわからないまま投資や副業に飛びついてしまうことです。",
+          "焦って増やすより、まずは現状を見える化しましょう。"
+        ],
+        today: ["今月の固定費、変動費、貯蓄額をざっくり書き出してみましょう。"],
+        week: [
+          "使っていないサブスク、見直せる固定費、減らせる支出を3つ探してみましょう。",
+          "小さな改善でも、毎月続けば大きな余裕になります。"
+        ],
+        month: [
+          "毎月の余剰資金を把握し、無理なく続けられる資産運用や貯蓄の方針を決めましょう。",
+          "投資は、生活を壊さない範囲で進めることが大切です。"
+        ],
+        material: ["高スワップ通貨の比較リスト5選"]
+      },
+      D: {
+        intro: [
+          "あなたは、いきなり副業や投資に走る前に、心と時間の余白を作ることが先かもしれません。",
+          "会社のストレスで消耗しきっている状態では、よい判断がしにくくなります。",
+          "まずは、働き方、休み方、会社との距離感を少しずつ整えていきましょう。"
+        ],
+        state: [
+          "今のあなたは、副業や投資を増やす前に、心と時間の余白を取り戻すことが先かもしれません。",
+          "会社のストレスで消耗しきっている状態では、よい判断がしにくくなります。"
+        ],
+        stumble: [
+          "焦って副業を増やし、仕事の疲れにさらに作業を重ねてしまうことです。",
+          "副業が逃げ道ではなく、もう一つの負担になると続きません。"
+        ],
+        today: ["今の仕事で「減らせる負担」「断れること」「相談できること」を3つ書き出してみましょう。"],
+        week: [
+          "残業、休日対応、苦手な人間関係、断れない仕事の中から、1つだけ距離を置く工夫を考えてみましょう。"
+        ],
+        month: [
+          "仕事の負担を少し減らしながら、週に1回だけスマートFIREの準備時間を作ってみましょう。",
+          "まずは壊れない働き方を作ることが大切です。"
+        ],
+        material: ["0から10万円を目指す収入づくりの方法"]
+      }
+    };
+
+    const afterMessage = [
+      "診断結果は、最初の一歩を整理するための目安です。",
+      "スマートFIREは、焦って会社を辞めるためのものではありません。",
+      "会社員の安定を活かしながら、少しずつ選択肢を増やしていくための考え方です。",
+      "今日の小さな一歩から始めていきましょう。"
+    ];
+
+    const form = document.querySelector("#diagnosis-form");
+    const questionsRoot = document.querySelector("#questions");
+    const notice = document.querySelector("#notice");
+    const result = document.querySelector("#result");
+    const resultTitle = document.querySelector("#result-title");
+    const resultIntro = document.querySelector("#result-intro");
+    const subtype = document.querySelector("#subtype");
+    const bars = document.querySelector("#bars");
+    const resultDetails = document.querySelector("#result-details");
+    const afterMessageRoot = document.querySelector("#after-message");
+    const resetButton = document.querySelector("#reset-button");
+
+    function createParagraphs(lines) {
+      return lines.map((line) => `<p>${line}</p>`).join("");
+    }
+
+    function renderQuestions() {
+      questionsRoot.innerHTML = questions.map((question, questionIndex) => {
+        const name = `question-${questionIndex}`;
+        const options = Object.entries(question.options).map(([type, label]) => {
+          const id = `${name}-${type}`;
+          return `
+            <label class="option" for="${id}">
+              <input id="${id}" type="radio" name="${name}" value="${type}">
+              <span>${label}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <fieldset class="question">
+            <legend>${question.text}</legend>
+            <div class="option-list">${options}</div>
+          </fieldset>
+        `;
+      }).join("");
+    }
+
+    function getScores() {
+      const scores = { A: 0, B: 0, C: 0, D: 0 };
+      const formData = new FormData(form);
+
+      for (let index = 0; index < questions.length; index += 1) {
+        const answer = formData.get(`question-${index}`);
+
+        if (!answer) {
+          return null;
+        }
+
+        scores[answer] += 1;
+      }
+
+      return scores;
+    }
+
+    function rankTypes(scores) {
+      return Object.keys(scores).sort((left, right) => {
+        if (scores[right] !== scores[left]) {
+          return scores[right] - scores[left];
+        }
+
+        return typeOrder.indexOf(left) - typeOrder.indexOf(right);
+      });
+    }
+
+    function renderBars(scores) {
+      const maxScore = Math.max(...Object.values(scores), 1);
+      bars.innerHTML = ["A", "B", "C", "D"].map((type) => {
+        const width = Math.max((scores[type] / maxScore) * 100, 7);
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${typeLabels[type]}</div>
+            <div class="bar-track" aria-label="${typeLabels[type]}の傾向">
+              <span class="bar-fill type-${type.toLowerCase()}" style="width: ${width}%"></span>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderResult(scores) {
+      const rankedTypes = rankTypes(scores);
+      const mainType = rankedTypes[0];
+      const subType = rankedTypes[1];
+      const detail = results[mainType];
+
+      resultTitle.textContent = typeLabels[mainType];
+      resultIntro.innerHTML = createParagraphs(detail.intro);
+      subtype.innerHTML = `
+        <p class="subtype-title">サブ傾向：${typeLabels[subType]}の傾向もあります</p>
+        ${createParagraphs(subtypeComments[subType])}
+      `;
+
+      renderBars(scores);
+
+      resultDetails.innerHTML = `
+        <section class="result-section">
+          <h3>今のあなたの状態</h3>
+          ${createParagraphs(detail.state)}
+        </section>
+        <section class="result-section">
+          <h3>このタイプがつまずきやすいこと</h3>
+          ${createParagraphs(detail.stumble)}
+        </section>
+        <section class="result-section">
+          <h3>今日やる小さな一歩</h3>
+          ${createParagraphs(detail.today)}
+        </section>
+        <section class="result-section">
+          <h3>7日以内にやること</h3>
+          ${createParagraphs(detail.week)}
+        </section>
+        <section class="result-section">
+          <h3>1ヶ月の目安</h3>
+          ${createParagraphs(detail.month)}
+        </section>
+        <section class="result-section">
+          <h3>最初に見るとよい資料</h3>
+          ${createParagraphs(detail.material)}
+        </section>
+      `;
+      afterMessageRoot.innerHTML = createParagraphs(afterMessage);
+      result.classList.add("is-visible");
+      result.focus({ preventScroll: true });
+      result.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const scores = getScores();
+
+      if (!scores) {
+        notice.textContent = "すべての質問に回答してください";
+        result.classList.remove("is-visible");
+        return;
+      }
+
+      notice.textContent = "";
+      renderResult(scores);
+    });
+
+    resetButton.addEventListener("click", () => {
+      form.reset();
+      notice.textContent = "";
+      result.classList.remove("is-visible");
+      form.scrollIntoView({ behavior: "smooth", block: "start" });
+      const firstInput = form.querySelector("input");
+      if (firstInput) {
+        firstInput.focus({ preventScroll: true });
+      }
+    });
+
+    renderQuestions();
+  </script>
+</body>
+</html>
